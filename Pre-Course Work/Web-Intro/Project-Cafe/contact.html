@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Cafe</title>
+    <link rel="stylesheet" href="contact.css">
+  </head>
+  <body>  
+    <nav>
+      <ul>
+        <li><a href="index.html" class="links">Home</a></li>
+        <li><a href="contact.html" class="links">Contact Us</a></li>
+      </ul>
+    </nav>
+    <header>
+      <h1>Contact Us</h1>
+      <p>THis world is filled with gourmet dishes, unfortuneately I won't be able to find them all, are you willing to help?</p>
+    </header>
+    <main>
+      <form>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" placeholder="Ash Ketchum" required>
+        </div>
+        <div>
+          <label for="email">Email:</label>
+          <input type="text" id="email" name="email" placeholder="FutureChampion@oaklabs.com" required>
+        </div>
+        <label for="comment">Comment:</label>
+        <textarea name="comment" id="comment" cols="20" rows="5" placeholder="Please enter your comments here..." required></textarea>
+        <input type="submit" value="Submit">
+        <input id="cancel" type="button" Value="Cancel">
+      </form>
+    </main>
+    <footer>
+      <div id="test">
+        <h3>Your Comments:</h3>
+        <input type="button" value="Clear" onclick="deleteMsgs();">
+      </div>
+      <dl id="currentMsgs"></dl>
+    </footer>
+    <script>
+      const form = document.querySelector("form")
+      form.onsubmit = function(event){
+        event.preventDefault();
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const comment = document.getElementById("comment").value;
+        
+        const newMsg = message(name,email,comment);
+
+        let currentMsgs = [];
+        if (window.sessionStorage.getItem("messages")){
+          currentMsgs = JSON.parse(window.sessionStorage.getItem("messages"));
+        };
+        currentMsgs.push(newMsg);
+
+        window.sessionStorage.setItem("messages", JSON.stringify(currentMsgs));
+        displayMsgs();
+      }
+
+      const message = (n,e,c) => {
+        const name = n;
+        const email = e;
+        const comment = c;
+        return{name, email, comment}
+      }
+
+      function displayMsgs(){
+        let currentMsgs = [];
+        if (window.sessionStorage.getItem("messages")){
+          currentMsgs = JSON.parse(window.sessionStorage.getItem("messages"));
+        };
+
+        let listMsgs = [];
+        for(let i = 0; i < currentMsgs.length; i++){
+          let listMsg = "";
+          let currentMsg = currentMsgs[i];
+          listMsg += `<dt> ${currentMsg.name} | ${currentMsg.email}</dt>`
+          listMsg += `<dd> ${currentMsg.comment} </dd>`
+          listMsg += `<br/>`
+          listMsgs.push(listMsg);
+        }
+        const displayList = document.getElementById("currentMsgs")
+        displayList.innerHTML = listMsgs.join("");
+      }
+      displayMsgs();
+
+      function deleteMsgs(){
+        if (window.sessionStorage.getItem("messages")){
+          window.sessionStorage.removeItem("messages");
+        };
+        displayMsgs();
+      }
+    </script>
+  </body>
+</html>

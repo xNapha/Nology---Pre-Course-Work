@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSS Combinators</title>
+  </head>
+  <body>
+    <div class="container">
+      <p>Direct Child</p>
+      <p>Another Direct Child</p>
+      <span>
+        <p>Not a Direct Child</p>
+      </span>
+    </div>
+    <p>First Sibling</p>
+    <p>Second Sibling</p>
+    <p>Third Sibling</p>
+    <style>
+      .container{border: 2px solid black}
+      p{color:red;}
+      .container p { color:blue;}
+      .container > p { color:green;}
+      .container ~ p { color: purple;}
+      .container + p { color: orange;}
+      </style>
+  </body>
+  
+</html>
