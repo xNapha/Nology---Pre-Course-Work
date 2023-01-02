@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DOM</title>
+        <style>
+            *{
+                font-family: sans-serif;
+            }
+            .valid{
+                background-color: lightgreen;
+                border: 5px solid green;
+            }
+            form *{
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Event Attribute-->
+        <!-- <h1 onmouseover="alert('Mouse Over')">Heading</h1>
+        <button onclick="alert('I was clicked')">Click me</button>
+        <form>
+            <input onfocus="alert('I was focused')" type="text">
+        </form> -->
+        <h1 id="heading">Hello</h1>
+        <button id="btn">Click</button>
+        <form>
+            <input type="text" class="input">
+            <input type="text" class="input">
+        </form>
+
+        <form id="nameForm">
+            <input type="text" id="nameInput">
+            <button>Submit</button>
+        </form>
+
+        <ul id="namesList">
+
+        </ul>
+        <script>
+            //Getting a html element
+            const heading = document.getElementById("heading");
+            const button = document.getElementById("btn");
+
+            //Getting multiple elements
+            const inputs = document.querySelectorAll(".input");
+            console.log(inputs)               
+
+            heading.innerHTML = "Javascript <span>did this</span>";
+            console.log(button);
+            console.dir(button);
+            button.style.backgroundColor= "green";
+            button.innerHTML = "Click Me!";
+            
+            inputs[0].value = "The user was here!";
+            inputs[1].value = "The user was here!";
+            console.dir(inputs[0])
+            for(let i = 0; i< inputs.length; i++){
+                inputs[i].value = "For loop"
+            }
+            heading.addEventListener("mouseover", ()=>{
+                heading.innerHTML = "Hello User";
+            })
+            heading.addEventListener("mouseleave", ()=>{
+                heading.innerHTML = "Goodbye User";
+            })
+            button.addEventListener("click", () =>{
+                button.innerHTML = "Clicked :D"
+                button.style.backgroundColor = "#FFF"
+                button.style.border = "1px solid #000"
+                button.style.borderRadius = "20px"
+            })
+            document.querySelectorAll(".input").forEach((input)=>{
+                input.addEventListener("focus", ()=>{
+                    input.classList.add("valid")
+                });
+                input.addEventListener("input", (event)=>{
+                    console.log(event.target.value)
+                });
+
+            });
+            const nameForm = document.getElementById("nameForm");
+            nameForm.addEventListener("submit", (event)=>{
+                event.preventDefault();
+                const namesList = document.getElementById("namesList");
+                const inputValue = document.getElementById("nameInput").value;
+                namesList.innerHTML += `<li>${inputValue}</li>`
+            })
+        </script>
+    </body>
+</html>

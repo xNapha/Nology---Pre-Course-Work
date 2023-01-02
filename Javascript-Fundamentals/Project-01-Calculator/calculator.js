@@ -1,0 +1,7 @@
+const calcFoundation = () =>{
+
+};
+
+const calcFunction = () =>{
+
+};

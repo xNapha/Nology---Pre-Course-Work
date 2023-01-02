@@ -1,0 +1,190 @@
+<!--
+Display some red error messages beneath the input if they don't have a value
+Give the inputs a green border when they are valid (and red when they aren't)
+On signup, display "thank you for registering" on the page
+EXT: Make the form a two step form, the second step contains a "dropdown" asking how did you hear about nology?
+Following the UX guidelines build the form, and make it your own
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nologyconf</title>
+    <style>
+      html, body, div, span, applet, object, iframe,
+      h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+      a, abbr, acronym, address, big, cite, code,
+      del, dfn, em, img, ins, kbd, q, s, samp,
+      small, strike, strong, sub, sup, tt, var,
+      b, u, i, center,
+      dl, dt, dd, ol, ul, li,
+      fieldset, form, label, legend,
+      table, caption, tbody, tfoot, thead, tr, th, td,
+      article, aside, canvas, details, embed, 
+      figure, figcaption, footer, header, hgroup, 
+      menu, nav, output, ruby, section, summary,
+      time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+      }
+      .valid{
+        border: 1px solid green;
+      }
+      .invalid{
+        border: 1px solid red;
+      }
+      body{
+        height: 100vh;
+      }
+      header{
+        background-color: #d682ed;
+      }
+      h1{
+        font-size: 5rem;
+        text-align: left;
+      }
+      main{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 70vh;
+        gap: 4rem;
+      }
+      main > *{
+        width: 20rem;
+        align-self: center;
+      }
+      section{
+        text-align: center;
+      }
+      form{
+        display: flex;
+        flex-direction: column;
+      }
+      footer{
+        text-align: center;
+        background-color: #d682ed;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+      form> h2{
+        font-size: 2rem; 
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      //Creation of Header tag
+      const header = document.createElement("header");
+      const h1 = document.createElement("h1");
+      h1.innerHTML = "Nology Conf";
+      header.append(h1);
+      //Creation of Main tag
+      const main = document.createElement("main");
+      //Creation of register section
+      const registerDiv = document.createElement("section");
+
+      const h2 = document.createElement("h2");
+      h2.innerHTML="Register for <span>nologyconf</span>";
+      
+      const registerButton = document.createElement("button");
+      registerButton.innerHTML="Register below";
+      
+      registerDiv.append(h2, registerButton);
+      //Creation of the first form
+      const formDiv = document.createElement("div");
+      const form = document.createElement("form");
+      form.addEventListener("submit", (event)=>{
+        event.preventDefault();
+        secondFormValidation();
+      });
+      const nameLabel = document.createElement("label");
+      nameLabel.setAttribute("for", "name");
+      nameLabel.innerHTML = "Name";
+      const nameInput = document.createElement("input");
+      nameInput.setAttribute("name", "name");
+      nameInput.setAttribute("type", "text");
+      nameInput.setAttribute("id", "name");
+      nameInput.setAttribute("required", "true");
+      nameInput.setAttribute("onchange", "handleInputChange(event)");
+      const emailLabel = document.createElement("label");
+      emailLabel.setAttribute("for", "email");
+      emailLabel.innerHTML = "Email";
+      const emailInput = document.createElement("input");
+      emailInput.setAttribute("name", "email");
+      emailInput.setAttribute("type", "email");
+      emailInput.setAttribute("id", "email");
+      emailInput.setAttribute("required", "true");
+      emailInput.setAttribute("onchange", "handleInputChange(event)");
+      const formButton = document.createElement("button");
+      formButton.innerHTML = "Sign me up";
+      formDiv.append(form);
+      form.append(nameLabel, nameInput, emailLabel, emailInput, formButton);
+      
+      // Second Form creation
+      const secondFormValidation=()=>{
+        form.remove();
+        const secondForm = document.createElement("form");
+        secondForm.addEventListener("submit", (event)=>{
+          event.preventDefault();
+          secondForm.remove();
+          registerDiv.remove();
+          thankYouForm();
+        })
+        const questionLabel = document.createElement("label");
+        questionLabel.setAttribute("for", "question");
+        questionLabel.innerHTML = "How did you here about nologyconf? ";
+        const questionInput = document.createElement("select");
+        questionInput.setAttribute("name", "question");
+        questionInput.setAttribute("id", "question");
+        const questionButton = document.createElement("button");
+        questionButton.innerHTML = "Submit";
+        
+        const questionArr = ["Family/Friend","Internet","Co-worker"];
+        const questionOptionCreation=(arrOfQuestions)=>{
+          arrOfQuestions.forEach((question)=>{
+            const option = document.createElement("option");
+            option.setAttribute("value", question);
+            option.innerHTML = question;
+            questionInput.appendChild(option);
+          });
+        };
+        questionOptionCreation(questionArr);
+        secondForm.append(questionLabel, questionInput, questionButton)
+        formDiv.append(secondForm);
+      };
+
+      const thankYouForm = () =>{
+        const thankYouH2 = document.createElement("h2");
+        thankYouH2.innerHTML = "Thank you for registering";
+        formDiv.append(thankYouH2)
+      }
+
+      main.append(registerDiv,formDiv);
+      //Footer Creation
+      const footer = document.createElement("footer");
+      const footerPara = document.createElement("p");
+      footerPara.innerHTML = "© Nathan Cai";
+      footer.append(footerPara);
+
+      document.querySelector("body").append(header, main, footer);
+
+      function handleInputChange(event){
+        if(event.target.value.length != 0){
+          event.target.classList.remove("invalid");
+          event.target.classList.add("valid");
+        }else{
+          event.target.classList.add("invalid");
+          event.target.classList.remove("valid");
+        };
+      };
+    </script>
+  </body>
+</html>
