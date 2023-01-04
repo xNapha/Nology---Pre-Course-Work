@@ -17,5 +17,43 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	box-sizing: border-box;
 }
-main
+main{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+#calcCon{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid black;
+	width: 25rem;
+	height: 30rem;
+}
+#display{
+	border: 1px solid black;
+	height: 5rem;
+	width: 23rem;
+}
+#topDisplay{
+	border: 1px solid blue;
+	height: 2rem;
+}
+#mainDisplay{
+	border: 1px solid red;
+	height: 3rem;
+}
+.buttons{
+	width: 5rem;
+	height: 5rem;
+}
+footer{
+	width: 100vw;
+	text-align: center;
+	position: absolute;
+	bottom: 0;
+}
