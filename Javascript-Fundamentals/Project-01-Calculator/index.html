@@ -4,10 +4,53 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Calculator</title>
   <style href="style.css"></style>
 </head>
 <body>
+  <main>
+    <section>
+      <div id="display">
+        <h6 id="topDisplay"></h6>
+        <h4 id="mainDisplay"></h4>
+      </div>
+      <div id="inputs">
+        <section id="rowOne">
+          <button class="buttons" value="(">(</button>
+          <button class="buttons" value=")">)</button>
+          <button class="buttons" value="/100">%</button>
+          <button class="buttons" value="Clear">C</button>
+        </section>
+        <section id="rowTwo">
+          <button class="buttons" value="7">7</button>
+          <button class="buttons" value="8">8</button>
+          <button class="buttons" value="9">9</button>
+          <button class="buttons" value="/">Divide</button>
+        </section>
+        <section id="rowThree">
+          <button class="buttons" value="4">4</button>
+          <button class="buttons" value="5">5</button>
+          <button class="buttons" value="6">6</button>
+          <button class="buttons" value="*">Multiply</button>
+        </section>
+        <section id="rowFour">
+          <button class="buttons" value="1">1</button>
+          <button class="buttons" value="2">2</button>
+          <button class="buttons" value="3">3</button>
+          <button class="buttons" value="-">Minus</button>
+        </section>
+        <section id="rowFive">
+          <button class="buttons" value="0">0</button>
+          <button class="buttons" value=".">Period</button>
+          <button class="buttons" value="=">Equals</button>
+          <button class="buttons" value="+">Plus</button>
+        </section>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>© Nathan Cai</p>
+  </footer>
   <script src="./calculator.js"></script>
 </body>
 </html>

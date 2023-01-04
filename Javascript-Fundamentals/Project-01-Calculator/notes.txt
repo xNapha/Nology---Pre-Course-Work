@@ -1,0 +1,8 @@
+Create HTML button layout
+  > I will be basing my design off the google calculator button layout
+    > only because it provides a simple button layout
+  > I will not be using all the buttons because i dont know what some of those buttons do
+Create a temporary styling to get an idea of how the calculator will look like
+Create the javascript for the calculator
+  > programming button by button
+Finish styling the calculator
