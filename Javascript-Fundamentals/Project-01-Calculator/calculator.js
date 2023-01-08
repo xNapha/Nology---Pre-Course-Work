@@ -1,17 +1,45 @@
-// when buttons are pressed show input on the display
 const mainDisplay = document.querySelector("#mainDisplay");
 let previousValue = "";
 let currentValue = "0";
 let currentOperator = "";
 let operatorPressedBefore = "";
+let negativePressed = false;
 let isDecimal = false;
 let equalPressed = false;
+let displayPressed = "light"
+const displayBtn = document.querySelector("#displayBtn");
 const buttons = document.querySelectorAll(".buttons");
 buttons.forEach(button => button.addEventListener("click", (event)=>{
-  const btnVal = event.target.value;
-  switch(btnVal){
+  switch(event.target.value){
+    case "Display":
+      if(displayPressed == "light"){
+        displayPressed = "dark";
+        displayBtn.innerHTML = "Dark"
+      } else{
+        displayPressed = "light";
+        displayBtn.innerHTML = "Light"
+      };
+      break;
+    case "-1":
+      negativePressed = true;
+      if(previousValue == "" && currentValue == "0"){
+        return;
+      }else if(previousValue == ""){
+        previousValue = parseFloat(currentValue)* -1;
+        mainDisplay.innerHTML = `${previousValue}`;
+        currentValue = "";
+      } else if(negativePressed){
+        previousValue = parseFloat(previousValue)*-1;
+        mainDisplay.innerHTML = `${previousValue}`;
+        currentValue = "";
+      } else{
+        currentValue = parseFloat(currentValue)*-1
+        mainDisplay.innerHTML = `${currentValue}`;
+      }
+      negativePressed = false;
+      break;
     case "/100":
-      operatorPressedBefore = "%"
+      operatorPressedBefore = "%";
       if(previousValue == ""){
         previousValue = parseFloat(currentValue)/100;
         mainDisplay.innerHTML = `${previousValue}`;
@@ -33,7 +61,7 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
         mainDisplay.innerHTML = `${previousValue}`;
         currentValue = "";
       } else if(currentOperator === "%"){
-        previousValue = parseFloat(previousValue)/100
+        previousValue = parseFloat(previousValue)/100;
         mainDisplay.innerHTML = `${previousValue}`;
         currentValue = "";
       }
@@ -47,6 +75,7 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
       operatorPressedBefore = "";
       isDecimal = false;
       equalPressed = false;
+      negativePressed = false;
       break;
     case "/":
       if(operatorPressedBefore === "/"){
@@ -169,7 +198,3 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
       };
   };
 }));
-
-
-
-
