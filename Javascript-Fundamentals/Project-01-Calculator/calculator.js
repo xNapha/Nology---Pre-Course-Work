@@ -1,9 +1,9 @@
 // when buttons are pressed show input on the display
 const mainDisplay = document.querySelector("#mainDisplay");
-let previousValue = "0";
-let currentValue = "";
+let previousValue = "";
+let currentValue = "0";
 let currentOperator = "";
-let equalsPressed = false;
+let isDecimal = false;
 const buttons = document.querySelectorAll(".buttons");
 buttons.forEach(button => button.addEventListener("click", (event)=>{
   const btnVal = event.target.value;
@@ -11,13 +11,15 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
     
   }
   switch(btnVal){
-    case "(":
-      break;
-    case ")":
-      break;
     case "/100":
       break;
     case "Clear":
+      mainDisplay.innerHTML = "";
+      previousValue = "";
+      currentValue = "0";
+      currentOperator = "";
+      isDecimal = false;
+      equalPressed = false;
       break;
     case "/":
       currentOperator = "/";
@@ -31,21 +33,37 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
     case "+":
       currentOperator = "+";
       previousValue = currentValue;
+      currentValue = "";
       break;
     case "=":
-      equalsPressed = true;
+      if(currentOperator === "+"){
+        previousValue = parseFloat(previousValue) + parseFloat(currentValue)
+        mainDisplay.innerHTML = `${previousValue}`
+      }
+      //currentOperator = "";
       break;
     case ".":
+      if(!isDecimal){
+        isDecimal = true;
+        currentValue += event.target.value;
+        mainDisplay.innerHTML = `${currentValue}`
+      }
       break;
     default:
+      if(currentValue === "0"){
+        currentValue = event.target.value;
+        mainDisplay.innerHTML = `${currentValue}`;
+        return;
+      }else if (equalPressed){
+        currentValue = event.target.value
+        mainDisplay.innerHTML = `${currentValue}`;
+        return;
+      }
       currentValue += event.target.value;
-      mainDisplay.innerHTML += `${event.target.value}`;
+      mainDisplay.innerHTML = `${currentValue}`;
   };
 }));
 
-function addition(previous, current){
-  mainDisplay.innerHTML = ` ${parseInt(previous) + parseInt(current)}`;
-}
 
 
 
