@@ -11,12 +11,40 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
   const btnVal = event.target.value;
   switch(btnVal){
     case "/100":
+      operatorPressedBefore = "%"
+      if(previousValue == ""){
+        previousValue = parseFloat(currentValue)/100;
+        mainDisplay.innerHTML = `${previousValue}`;
+        currentValue = "";
+      } else if(currentOperator === "+"){
+        previousValue = (parseFloat(previousValue) + parseFloat(currentValue))/100;
+        mainDisplay.innerHTML = `${previousValue}`;
+        currentValue = "";
+      } else if(currentOperator === "-"){
+        previousValue = (parseFloat(previousValue) - parseFloat(currentValue))/100;
+        mainDisplay.innerHTML = `${previousValue}`;
+        currentValue = "";
+      } else if(currentOperator === "*"){
+        previousValue = (parseFloat(previousValue) * parseFloat(currentValue))/100;
+        mainDisplay.innerHTML = `${previousValue}`;
+        currentValue = "";
+      } else if(currentOperator === "/"){
+        previousValue = (parseFloat(previousValue) / parseFloat(currentValue))/100;
+        mainDisplay.innerHTML = `${previousValue}`;
+        currentValue = "";
+      } else if(currentOperator === "%"){
+        previousValue = parseFloat(previousValue)/100
+        mainDisplay.innerHTML = `${previousValue}`;
+        currentValue = "";
+      }
+      currentOperator = "%";
       break;
     case "Clear":
       mainDisplay.innerHTML = "";
       previousValue = "";
       currentValue = "0";
       currentOperator = "";
+      operatorPressedBefore = "";
       isDecimal = false;
       equalPressed = false;
       break;
@@ -30,7 +58,7 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
         previousValue = parseFloat(previousValue) / parseFloat(currentValue);
         mainDisplay.innerHTML = `${previousValue}`;
         currentValue = "";
-      } else if(currentOperator === "-" || currentOperator === "+" || currentOperator ==="*"){
+      } else if(currentOperator === "-" || currentOperator === "+" || currentOperator ==="*" || currentOperator ==="%"){
         currentOperator = "/";
       } else if(equalPressed){
         currentOperator = "/";
@@ -50,7 +78,7 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
         previousValue = parseFloat(previousValue) * parseFloat(currentValue);
         mainDisplay.innerHTML = `${previousValue}`;
         currentValue = "";
-      } else if(currentOperator === "-" || currentOperator === "+" || currentOperator ==="/"){
+      } else if(currentOperator === "-" || currentOperator === "+" || currentOperator ==="/" || currentOperator ==="%"){
         currentOperator = "*";
       } else if(equalPressed){
         currentOperator = "*";
@@ -70,7 +98,7 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
         previousValue = parseFloat(previousValue) - parseFloat(currentValue);
         mainDisplay.innerHTML = `${previousValue}`;
         currentValue = "";
-      } else if(currentOperator === "+" || currentOperator === "*" || currentOperator ==="/"){
+      } else if(currentOperator === "+" || currentOperator === "*" || currentOperator ==="/" || currentOperator ==="%"){
         currentOperator = "-";
       } else if(equalPressed){
         currentOperator = "-";
@@ -90,7 +118,7 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
         previousValue = parseFloat(previousValue) + parseFloat(currentValue);
         mainDisplay.innerHTML = `${previousValue}`;
         currentValue = "";
-      } else if(currentOperator === "-" || currentOperator === "*" || currentOperator ==="/"){
+      } else if(currentOperator === "-" || currentOperator === "*" || currentOperator ==="/" || currentOperator ==="%"){
         currentOperator = "+";
       } else if(equalPressed){
         currentOperator = "+";
