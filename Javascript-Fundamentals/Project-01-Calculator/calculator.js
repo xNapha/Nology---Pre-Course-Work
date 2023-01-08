@@ -3,13 +3,12 @@ const mainDisplay = document.querySelector("#mainDisplay");
 let previousValue = "";
 let currentValue = "0";
 let currentOperator = "";
+let operatorPressedBefore = "";
 let isDecimal = false;
+let equalPressed = false;
 const buttons = document.querySelectorAll(".buttons");
 buttons.forEach(button => button.addEventListener("click", (event)=>{
   const btnVal = event.target.value;
-  if(currentOperator != ""){
-    
-  }
   switch(btnVal){
     case "/100":
       break;
@@ -22,25 +21,69 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
       equalPressed = false;
       break;
     case "/":
+      if(operatorPressedBefore){
+        return;
+      }
+      operatorPressedBefore = true;
       currentOperator = "/";
       break;
     case "*":
+      if(operatorPressedBefore){
+        return;
+      }
+      operatorPressedBefore = true;
       currentOperator = "*";
       break;
     case "-":
-      currentOperator = "-";
+      if(operatorPressedBefore === "-"){
+        return;
+      }
+      operatorPressedBefore = "-";
+      if(currentOperator === "-"){
+        currentOperator = "-";
+        previousValue = parseFloat(previousValue) - parseFloat(currentValue);
+        mainDisplay.innerHTML = `${previousValue}`;
+        currentValue = "";
+      } else if(currentOperator === "+" || currentOperator === "*" || currentOperator ==="/"){
+        currentOperator = "-";
+      } else if(equalPressed){
+        currentOperator = "-";
+      } else {
+        currentOperator = "-";
+        previousValue = currentValue;
+        currentValue = "";
+      }
       break;
     case "+":
-      currentOperator = "+";
-      previousValue = currentValue;
-      currentValue = "";
+      if(operatorPressedBefore === "+"){
+        return;
+      }
+      operatorPressedBefore = "+";
+      if(currentOperator === "+"){
+        currentOperator = "+";
+        previousValue = parseFloat(previousValue) + parseFloat(currentValue);
+        mainDisplay.innerHTML = `${previousValue}`;
+        currentValue = "";
+      } else if(currentOperator === "-" || currentOperator === "*" || currentOperator ==="/"){
+        currentOperator = "+";
+      } else if(equalPressed){
+        currentOperator = "+";
+      } else {
+        currentOperator = "+";
+        previousValue = currentValue;
+        currentValue = "";
+      }
       break;
     case "=":
+      equalPressed = true;
       if(currentOperator === "+"){
-        previousValue = parseFloat(previousValue) + parseFloat(currentValue)
-        mainDisplay.innerHTML = `${previousValue}`
+        previousValue = parseFloat(previousValue) + parseFloat(currentValue);
+        mainDisplay.innerHTML = `${previousValue}`;
+      } else if(currentOperator === "-"){
+        previousValue = parseFloat(previousValue) - parseFloat(currentValue);
+        mainDisplay.innerHTML = `${previousValue}`;
       }
-      //currentOperator = "";
+      currentOperator = "";
       break;
     case ".":
       if(!isDecimal){
@@ -50,17 +93,20 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
       }
       break;
     default:
+      operatorPressedBefore = false;
       if(currentValue === "0"){
         currentValue = event.target.value;
         mainDisplay.innerHTML = `${currentValue}`;
         return;
-      }else if (equalPressed){
-        currentValue = event.target.value
+      } else if(equalPressed){
+        currentValue = event.target.value;
         mainDisplay.innerHTML = `${currentValue}`;
+        equalPressed = false;
         return;
-      }
-      currentValue += event.target.value;
-      mainDisplay.innerHTML = `${currentValue}`;
+      } else {
+        currentValue += event.target.value;
+        mainDisplay.innerHTML = `${currentValue}`;
+      };
   };
 }));
 
