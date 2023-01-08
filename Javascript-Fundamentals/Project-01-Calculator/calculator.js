@@ -21,18 +21,44 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
       equalPressed = false;
       break;
     case "/":
-      if(operatorPressedBefore){
+      if(operatorPressedBefore === "/"){
         return;
       }
-      operatorPressedBefore = true;
-      currentOperator = "/";
+      operatorPressedBefore = "/";
+      if(currentOperator === "/"){
+        currentOperator = "/";
+        previousValue = parseFloat(previousValue) / parseFloat(currentValue);
+        mainDisplay.innerHTML = `${previousValue}`;
+        currentValue = "";
+      } else if(currentOperator === "-" || currentOperator === "+" || currentOperator ==="*"){
+        currentOperator = "/";
+      } else if(equalPressed){
+        currentOperator = "/";
+      } else {
+        currentOperator = "/";
+        previousValue = currentValue;
+        currentValue = "";
+      }
       break;
     case "*":
-      if(operatorPressedBefore){
+      if(operatorPressedBefore === "*"){
         return;
       }
-      operatorPressedBefore = true;
-      currentOperator = "*";
+      operatorPressedBefore = "*";
+      if(currentOperator === "*"){
+        currentOperator = "*";
+        previousValue = parseFloat(previousValue) * parseFloat(currentValue);
+        mainDisplay.innerHTML = `${previousValue}`;
+        currentValue = "";
+      } else if(currentOperator === "-" || currentOperator === "+" || currentOperator ==="/"){
+        currentOperator = "*";
+      } else if(equalPressed){
+        currentOperator = "*";
+      } else {
+        currentOperator = "*";
+        previousValue = currentValue;
+        currentValue = "";
+      }
       break;
     case "-":
       if(operatorPressedBefore === "-"){
@@ -81,6 +107,12 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
         mainDisplay.innerHTML = `${previousValue}`;
       } else if(currentOperator === "-"){
         previousValue = parseFloat(previousValue) - parseFloat(currentValue);
+        mainDisplay.innerHTML = `${previousValue}`;
+      } else if (currentOperator === "*"){
+        previousValue = parseFloat(previousValue) * parseFloat(currentValue);
+        mainDisplay.innerHTML = `${previousValue}`;
+      } else if (currentOperator === "/"){
+        previousValue = parseFloat(previousValue) / parseFloat(currentValue);
         mainDisplay.innerHTML = `${previousValue}`;
       }
       currentOperator = "";
