@@ -7,20 +7,43 @@ let negativePressed = false;
 let isDecimal = false;
 let equalPressed = false;
 let displayPressed = "light"
-const displayBtn = document.querySelector("#displayBtn");
-const buttons = document.querySelectorAll(".buttons");
+const displayBtn = document.querySelector("#mode");
+const operatorDisplay = document.querySelector("#operatorDisplay");
+const buttons = document.querySelectorAll("input");
 buttons.forEach(button => button.addEventListener("click", (event)=>{
-  switch(event.target.value){
+  console.log(event.path[0].value)
+  switch(event.path[0].value){
     case "Display":
       if(displayPressed == "light"){
         displayPressed = "dark";
-        displayBtn.innerHTML = "Dark"
+        document.querySelectorAll(`[value]`).forEach(button => {
+          if(button.value == "Display"){
+            return;
+          } else{
+            button.removeAttribute("src",`./imgs/light - ${button.value}.png`);
+            button.setAttribute("src",`./imgs/dark - ${button.value}.png`);
+            return;
+          }
+          });
+        displayBtn.removeAttribute("src",'./imgs/light - moon.png');
+        displayBtn.setAttribute("src",'./imgs/dark - sun.png');
       } else{
         displayPressed = "light";
-        displayBtn.innerHTML = "Light"
+        document.querySelectorAll(`[value]`).forEach(button => {
+          console.log(button.value)
+          if(button.value == "Display"){
+            return;
+          }else{
+            button.removeAttribute("src",`./imgs/dark - ${button.value}.png`);
+            button.setAttribute("src",`./imgs/light - ${button.value}.png`);
+            return;
+          }
+          });
+          displayBtn.removeAttribute("src",'./imgs/dark - sun.png');
+          displayBtn.setAttribute("src",'./imgs/light - moon.png');
       };
       break;
-    case "-1":
+    case "negative":
       negativePressed = true;
       if(previousValue == "" && currentValue == "0"){
         return;
@@ -38,7 +61,7 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
       }
       negativePressed = false;
       break;
-    case "/100":
+    case "percentage":
       operatorPressedBefore = "%";
       if(previousValue == ""){
         previousValue = parseFloat(currentValue)/100;
@@ -67,97 +90,114 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
       }
       currentOperator = "%";
       break;
-    case "Clear":
+    case "clear":
       mainDisplay.innerHTML = "";
       previousValue = "";
       currentValue = "0";
       currentOperator = "";
+      operatorDisplay = "";
       operatorPressedBefore = "";
       isDecimal = false;
       equalPressed = false;
       negativePressed = false;
       break;
-    case "/":
+    case "division":
       if(operatorPressedBefore === "/"){
         return;
       }
       operatorPressedBefore = "/";
       if(currentOperator === "/"){
         currentOperator = "/";
+        operatorDisplay.innerHTML = "/";
         previousValue = parseFloat(previousValue) / parseFloat(currentValue);
         mainDisplay.innerHTML = `${previousValue}`;
         currentValue = "";
       } else if(currentOperator === "-" || currentOperator === "+" || currentOperator ==="*" || currentOperator ==="%"){
         currentOperator = "/";
+        operatorDisplay.innerHTML = "/";
       } else if(equalPressed){
         currentOperator = "/";
+        operatorDisplay.innerHTML = "/";
       } else {
         currentOperator = "/";
+        operatorDisplay.innerHTML = "/";
         previousValue = currentValue;
         currentValue = "";
       }
       break;
-    case "*":
+    case "multiply":
       if(operatorPressedBefore === "*"){
         return;
       }
       operatorPressedBefore = "*";
       if(currentOperator === "*"){
         currentOperator = "*";
+        operatorDisplay.innerHTML = "*";
         previousValue = parseFloat(previousValue) * parseFloat(currentValue);
         mainDisplay.innerHTML = `${previousValue}`;
         currentValue = "";
       } else if(currentOperator === "-" || currentOperator === "+" || currentOperator ==="/" || currentOperator ==="%"){
         currentOperator = "*";
+        operatorDisplay.innerHTML = "*";
       } else if(equalPressed){
         currentOperator = "*";
+        operatorDisplay.innerHTML = "*";
       } else {
         currentOperator = "*";
+        operatorDisplay.innerHTML = "*";
         previousValue = currentValue;
         currentValue = "";
       }
       break;
-    case "-":
+    case "minus":
       if(operatorPressedBefore === "-"){
         return;
       }
       operatorPressedBefore = "-";
       if(currentOperator === "-"){
         currentOperator = "-";
+        operatorDisplay.innerHTML = "-";
         previousValue = parseFloat(previousValue) - parseFloat(currentValue);
         mainDisplay.innerHTML = `${previousValue}`;
         currentValue = "";
       } else if(currentOperator === "+" || currentOperator === "*" || currentOperator ==="/" || currentOperator ==="%"){
         currentOperator = "-";
+        operatorDisplay.innerHTML = "-";
       } else if(equalPressed){
         currentOperator = "-";
+        operatorDisplay.innerHTML = "-";
       } else {
         currentOperator = "-";
+        operatorDisplay.innerHTML = "-";
         previousValue = currentValue;
         currentValue = "";
       }
       break;
-    case "+":
+    case "plus":
       if(operatorPressedBefore === "+"){
         return;
       }
       operatorPressedBefore = "+";
       if(currentOperator === "+"){
         currentOperator = "+";
+        operatorDisplay.innerHTML = "+";
         previousValue = parseFloat(previousValue) + parseFloat(currentValue);
         mainDisplay.innerHTML = `${previousValue}`;
         currentValue = "";
       } else if(currentOperator === "-" || currentOperator === "*" || currentOperator ==="/" || currentOperator ==="%"){
         currentOperator = "+";
+        operatorDisplay.innerHTML = "+";
       } else if(equalPressed){
         currentOperator = "+";
+        operatorDisplay.innerHTML = "+";
       } else {
         currentOperator = "+";
+        operatorDisplay.innerHTML = "+";
         previousValue = currentValue;
         currentValue = "";
       }
       break;
-    case "=":
+    case "equal":
       equalPressed = true;
       if(currentOperator === "+"){
         previousValue = parseFloat(previousValue) + parseFloat(currentValue);
@@ -173,27 +213,29 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
         mainDisplay.innerHTML = `${previousValue}`;
       }
       currentOperator = "";
+      operatorDisplay.innerHTML = "";
       break;
-    case ".":
+    case "dot":
+      console.log("check")
       if(!isDecimal){
         isDecimal = true;
-        currentValue += event.target.value;
+        currentValue = currentValue + ".";
         mainDisplay.innerHTML = `${currentValue}`
-      }
+      };
       break;
     default:
       operatorPressedBefore = false;
       if(currentValue === "0"){
-        currentValue = event.target.value;
+        currentValue = event.path[0].value;
         mainDisplay.innerHTML = `${currentValue}`;
         return;
       } else if(equalPressed){
-        currentValue = event.target.value;
+        currentValue = event.path[0].value;
         mainDisplay.innerHTML = `${currentValue}`;
         equalPressed = false;
         return;
       } else {
-        currentValue += event.target.value;
+        currentValue += event.path[0].value;
         mainDisplay.innerHTML = `${currentValue}`;
       };
   };
