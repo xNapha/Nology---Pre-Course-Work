@@ -23,15 +23,20 @@ main{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
-	background-color: black;
+	height: 101vh;
+	width: 101vw;
+}
+.dark{
+	background-color: rgba(50,50,50)
+}
+.light{
+	background-color: rgba(210,210,210);
 }
 #calcCon{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	border: 1px solid black;
 	background-color: white;
 	border-radius: 2rem;
 	width: 23rem;
@@ -54,14 +59,15 @@ main{
 #mainDisplay{
 	height: 5rem;
 	width: 17rem;
-	font-size: 4rem;
+	font-size: 3rem;
+	overflow: auto;
 	text-align: right;
 }
 section{
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
 	align-items: center;
+	gap: 10px;
 }
 .buttons{
 	width: 4.5rem;

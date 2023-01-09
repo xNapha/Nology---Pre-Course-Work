@@ -10,8 +10,8 @@ let displayPressed = "light"
 const displayBtn = document.querySelector("#mode");
 const operatorDisplay = document.querySelector("#operatorDisplay");
 const buttons = document.querySelectorAll("input");
+const main = document.querySelector("main");
 buttons.forEach(button => button.addEventListener("click", (event)=>{
-  console.log(event.path[0].value)
   switch(event.path[0].value){
     case "Display":
       if(displayPressed == "light"){
@@ -25,12 +25,13 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
             return;
           }
           });
+        main.classList.remove("light");
+        main.classList.add("dark")
         displayBtn.removeAttribute("src",'./imgs/light - moon.png');
         displayBtn.setAttribute("src",'./imgs/dark - sun.png');
       } else{
         displayPressed = "light";
         document.querySelectorAll(`[value]`).forEach(button => {
-          console.log(button.value)
           if(button.value == "Display"){
             return;
           }else{
@@ -39,6 +40,8 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
             return;
           }
           });
+          main.classList.remove("dark");
+          main.classList.add("light")
           displayBtn.removeAttribute("src",'./imgs/dark - sun.png');
           displayBtn.setAttribute("src",'./imgs/light - moon.png');
       };
@@ -95,7 +98,7 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
       previousValue = "";
       currentValue = "0";
       currentOperator = "";
-      operatorDisplay = "";
+      operatorDisplay.innerHTML = "";
       operatorPressedBefore = "";
       isDecimal = false;
       equalPressed = false;
@@ -216,10 +219,9 @@ buttons.forEach(button => button.addEventListener("click", (event)=>{
       operatorDisplay.innerHTML = "";
       break;
     case "dot":
-      console.log("check")
       if(!isDecimal){
         isDecimal = true;
-        currentValue = currentValue + ".";
+        currentValue += ".";
         mainDisplay.innerHTML = `${currentValue}`
       };
       break;
