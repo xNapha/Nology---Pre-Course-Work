@@ -1,20 +1,31 @@
 // Board creation
 // a connect 4 board size never changes so no user input needed
 
+// User Interface
 const body = document.querySelector("body");
-const gameBoardCon = document.createElement("div");
-gameBoardCon.setAttribute("id", "gameBoardCon");
-body.append(gameBoardCon);
-let gameBoardArr = [];
+body.innerHTML = `
+<div id = "winningScreen">
+  <h1 id = "winningText"></h1>
+  <button onclick="reset()">Restart</button>
+</div>
+<h1>Connect 4</h1>
+<button onclick="reset()">Restart</button>
+<div id = "gameBoardCon"></div>
+<footer>© Nathan Cai</footer>
+`;
 
-const redPiece = "red";
-const yellowPiece = "yellow";
+// Global Variables used;
+const gameBoardCon = document.querySelector("#gameBoardCon")
+const winningScreen = document.querySelector("#winningScreen");
+const winningText = document.querySelector("#winningText");
+const redPiece = "Red";
+const yellowPiece = "Yellow";
+let gameBoardArr = [];
 let isRed = true;
 let piecesPlaced = 0;
 
-
-//Populate Array with arrays of objects
-function populateBoard(){
+// Populate Array with arrays of objects
+function populateArr(){
   for(let y = 0; y < 6; y++){
     const row = [];
     for(let x = 0; x< 7; x++){
@@ -22,25 +33,13 @@ function populateBoard(){
       div.classList.add("empty");
       div.addEventListener("click",()=>{
         addMarker(x);
-      })
-      const space = {
-        div,
-        x,
-        y,
-        taken:false,
-        piece: "empty",
-        number: piecesPlaced
-      };
+      });
+      const space = {div, x, y, taken:false, piece: "empty", number: piecesPlaced};
       row.push(space);
     };
     gameBoardArr.push(row);
   };
-  gameBoardArr.forEach(row =>{
-    row.forEach(space=>{
-      gameBoardCon.append(space.div);
-    });
-  });
-  return gameBoardArr;
+  populateBoard(gameBoardArr);
 }
 
 // Swap colours after each click
@@ -91,7 +90,8 @@ function checkWin(arr, currentSpace){
     horizontal.push(arr[currentSpace.y][x].piece);
   }
   if(inRow(horizontal,currentSpace.piece)){
-    console.log(`${currentSpace.piece} wins`);
+    winningScreen.style.display = "flex"
+    winningText.innerHTML = `${currentSpace.piece} wins`;
     return;
   }
   //check vertical line
@@ -99,7 +99,7 @@ function checkWin(arr, currentSpace){
     vertical.push(arr[y][currentSpace.x].piece);
   }
   if(inRow(vertical,currentSpace.piece)){
-    console.log(`${currentSpace.piece} wins`);
+    winningText.innerHTML = `${currentSpace.piece} wins`;
     return;
   }
   //check forward diagonal
@@ -107,7 +107,7 @@ function checkWin(arr, currentSpace){
     try{forwardDiagonal.push(arr[currentSpace.y-i][currentSpace.x+i].piece);} catch(err){};
   }
   if(inRow(forwardDiagonal,currentSpace.piece)){
-    console.log(`${currentSpace.piece} wins`);
+    winningText.innerHTML = `${currentSpace.piece} wins`;
     return;
   }
   //check backward diagonal
@@ -115,13 +115,13 @@ function checkWin(arr, currentSpace){
     try{backwardDiagonal.push(arr[currentSpace.y+i][currentSpace.x+i].piece);} catch(err){};
   }
   if(inRow(backwardDiagonal,currentSpace.piece)){
-    console.log(`${currentSpace.piece} wins`);
+    winningText.innerHTML = `${currentSpace.piece} wins`;
     return;
   }
 
   //check for draw
   if(piecesPlaced == 42){
-    console.log(`It is a draw`);
+    winningText.innerHTML = `Draw!`;
     return;
   }
 }
@@ -145,12 +145,29 @@ function inRow(line, currentPiece){
       return true;
     } else if(line.slice(2,7).every((space)=> space == currentPiece)){
       return true;
-    } else{
-      return false;
-    };
+    }
   } else{
     return false;
   };
 };
-//run function to visualise gameboard
-populateBoard();
+
+// run function to visualise gameboard
+function populateBoard(arr){
+  arr.forEach(row =>{
+    row.forEach(space=>{
+      gameBoardCon.append(space.div);
+    });
+  });
+  return arr;
+};
+
+// restart button, on press create new board and delete old board contents
+function reset(){
+  gameBoardCon.innerHTML = "";
+  gameBoardArr = [];
+  piecesPlaced = 0;
+  winningScreen.style.display = "none";
+  populateArr();
+}
+
+populateArr();
