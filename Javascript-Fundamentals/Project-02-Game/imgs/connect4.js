@@ -8,8 +8,11 @@ body.innerHTML = `
   <h1 id = "winningText"></h1>
   <button onclick="reset()">Restart</button>
 </div>
-<h1>Connect 4</h1>
-<button onclick="reset()">Restart</button>
+<header>
+  <h1>Connect 4</h1>
+  <button onclick="reset()">Restart</button>
+  <p id="playerTurn"></p>
+</header>
 <div id = "gameBoardCon"></div>
 <footer>© Nathan Cai</footer>
 `;
@@ -18,6 +21,7 @@ body.innerHTML = `
 const gameBoardCon = document.querySelector("#gameBoardCon")
 const winningScreen = document.querySelector("#winningScreen");
 const winningText = document.querySelector("#winningText");
+const playerTurn = document.querySelector("#playerTurn");
 const redPiece = "Red";
 const yellowPiece = "Yellow";
 let gameBoardArr = [];
@@ -45,6 +49,7 @@ function populateArr(){
 // Swap colours after each click
 function swapPlayers(){
   isRed = !isRed;
+  displayTurn();
 }
 
 // Move colours down to the very bottom of the column once a column once the column has been pressed
@@ -54,7 +59,6 @@ function addMarker(posX){
     if(!gameBoardArr[posY][posX].taken){
       if(isRed){
         piecesPlaced++
-        console.log(piecesPlaced)
         gameBoardArr[posY][posX].div.style.backgroundColor = redPiece;
         gameBoardArr[posY][posX].taken = true;
         gameBoardArr[posY][posX].piece = redPiece;
@@ -65,7 +69,6 @@ function addMarker(posX){
         break;
       }else{
         piecesPlaced++
-        console.log(piecesPlaced)
         gameBoardArr[posY][posX].div.style.backgroundColor = yellowPiece;
         gameBoardArr[posY][posX].taken = true;
         gameBoardArr[posY][posX].piece = yellowPiece;
@@ -99,6 +102,7 @@ function checkWin(arr, currentSpace){
     vertical.push(arr[y][currentSpace.x].piece);
   }
   if(inRow(vertical,currentSpace.piece)){
+    winningScreen.style.display = "flex"
     winningText.innerHTML = `${currentSpace.piece} wins`;
     return;
   }
@@ -107,6 +111,7 @@ function checkWin(arr, currentSpace){
     try{forwardDiagonal.push(arr[currentSpace.y-i][currentSpace.x+i].piece);} catch(err){};
   }
   if(inRow(forwardDiagonal,currentSpace.piece)){
+    winningScreen.style.display = "flex"
     winningText.innerHTML = `${currentSpace.piece} wins`;
     return;
   }
@@ -115,12 +120,14 @@ function checkWin(arr, currentSpace){
     try{backwardDiagonal.push(arr[currentSpace.y+i][currentSpace.x+i].piece);} catch(err){};
   }
   if(inRow(backwardDiagonal,currentSpace.piece)){
+    winningScreen.style.display = "flex"
     winningText.innerHTML = `${currentSpace.piece} wins`;
     return;
   }
 
   //check for draw
   if(piecesPlaced == 42){
+    winningScreen.style.display = "flex"
     winningText.innerHTML = `Draw!`;
     return;
   }
@@ -153,6 +160,7 @@ function inRow(line, currentPiece){
 
 // run function to visualise gameboard
 function populateBoard(arr){
+  displayTurn();
   arr.forEach(row =>{
     row.forEach(space=>{
       gameBoardCon.append(space.div);
@@ -169,5 +177,14 @@ function reset(){
   winningScreen.style.display = "none";
   populateArr();
 }
+
+// display the current players turn
+function displayTurn(){
+  if(isRed){
+    playerTurn.innerHTML = redPiece;
+  }else{
+    playerTurn.innerHTML = yellowPiece;
+  };
+};
 
 populateArr();
