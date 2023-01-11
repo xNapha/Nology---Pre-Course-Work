@@ -10,6 +10,8 @@ let gameBoardArr = [];
 const redPiece = "red";
 const yellowPiece = "yellow";
 let isRed = true;
+let piecesPlaced = 0;
+
 
 //Populate Array with arrays of objects
 function populateBoard(){
@@ -26,7 +28,8 @@ function populateBoard(){
         x,
         y,
         taken:false,
-        piece: "empty"
+        piece: "empty",
+        number: piecesPlaced
       };
       row.push(space);
     };
@@ -51,18 +54,24 @@ function addMarker(posX){
   for(let posY = 5; posY > -1; posY--){
     if(!gameBoardArr[posY][posX].taken){
       if(isRed){
+        piecesPlaced++
+        console.log(piecesPlaced)
         gameBoardArr[posY][posX].div.style.backgroundColor = redPiece;
         gameBoardArr[posY][posX].taken = true;
         gameBoardArr[posY][posX].piece = redPiece;
-        checkWin(gameBoardArr, gameBoardArr[posY][posX]);
+        gameBoardArr[posY][posX].number = piecesPlaced;
+        checkWin(gameBoardArr, gameBoardArr[posY][posX], piecesPlaced);
         //swap player once a game piece has been legally placed
         swapPlayers();
         break;
       }else{
+        piecesPlaced++
+        console.log(piecesPlaced)
         gameBoardArr[posY][posX].div.style.backgroundColor = yellowPiece;
         gameBoardArr[posY][posX].taken = true;
         gameBoardArr[posY][posX].piece = yellowPiece;
-        checkWin(gameBoardArr, gameBoardArr[posY][posX]);
+        gameBoardArr[posY][posX].number = piecesPlaced;
+        checkWin(gameBoardArr, gameBoardArr[posY][posX],piecesPlaced);
         //swap player once a game piece has been legally placed
         swapPlayers();
         break;
@@ -83,6 +92,7 @@ function checkWin(arr, currentSpace){
   }
   if(inRow(horizontal,currentSpace.piece)){
     console.log(`${currentSpace.piece} wins`);
+    return;
   }
   //check vertical line
   for(let y = 0; y< 6; y++){
@@ -90,22 +100,29 @@ function checkWin(arr, currentSpace){
   }
   if(inRow(vertical,currentSpace.piece)){
     console.log(`${currentSpace.piece} wins`);
+    return;
   }
   //check forward diagonal
-  for(let y = 0; y< 6; y++){
-    for(let x=0; x< 7; x++){
-
-    }
+  for(let i = -5; i<6; i++){
+    try{forwardDiagonal.push(arr[currentSpace.y-i][currentSpace.x+i].piece);} catch(err){};
   }
   if(inRow(forwardDiagonal,currentSpace.piece)){
     console.log(`${currentSpace.piece} wins`);
+    return;
   }
-
   //check backward diagonal
-  for(let y = 0; y< 6; y++){
+  for(let i = -5; i<6; i++){
+    try{backwardDiagonal.push(arr[currentSpace.y+i][currentSpace.x+i].piece);} catch(err){};
   }
   if(inRow(backwardDiagonal,currentSpace.piece)){
     console.log(`${currentSpace.piece} wins`);
+    return;
+  }
+
+  //check for draw
+  if(piecesPlaced == 42){
+    console.log(`It is a draw`);
+    return;
   }
 }
 
@@ -137,4 +154,3 @@ function inRow(line, currentPiece){
 };
 //run function to visualise gameboard
 populateBoard();
-try{gameBoardArr[7][7]}catch(err){console.log(false)}
