@@ -14,7 +14,7 @@ body.innerHTML = `
   <p id="playerTurn"></p>
 </header>
 <main>
-<div id = "gameBoardCon"></div>
+  <div id = "gameBoardCon"></div>
 </main>
 <footer>© Nathan Cai</footer>
 `;
@@ -40,6 +40,12 @@ function populateArr(){
       div.addEventListener("click",()=>{
         addMarker(x);
       });
+      div.addEventListener("mouseenter", ()=>{
+        hightLightColumn(x);
+      })
+      div.addEventListener("mouseleave", ()=>{
+        removeHighlight(x);
+      })
       const space = {div, x, y, taken:false, piece: "empty", number: piecesPlaced};
       row.push(space);
     };
@@ -186,6 +192,24 @@ function displayTurn(){
     playerTurn.innerHTML = redPiece;
   }else{
     playerTurn.innerHTML = yellowPiece;
+  };
+};
+
+// highlight column on mouseover
+function hightLightColumn(x){
+  // if space is taken do not high light column
+  for(let y = 0; y < 6; y++){
+    if(gameBoardArr[y][x].taken){
+      return;
+    }else{
+      gameBoardArr[y][x].div.classList.add("highLight");
+    };
+  };
+};
+// unhighlight column when mouse leaves column
+function removeHighlight(x){
+  for(let y = 0; y < 6; y++){
+    gameBoardArr[y][x].div.classList.remove("highLight");
   };
 };
 

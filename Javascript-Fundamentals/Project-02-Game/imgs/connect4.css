@@ -73,7 +73,7 @@ main{
   gap: .5rem;
   justify-content: center;
   align-items: center;
-  width: 25rem;
+  width: 25.5rem;
   background-color: blue;
   padding: .3rem;
   border-radius: 2rem;
@@ -89,6 +89,9 @@ main{
 }
 .empty:hover{
   cursor: pointer;
+}
+.highLight{
+  filter: brightness(70%)
 }
 footer{
   position: fixed;
