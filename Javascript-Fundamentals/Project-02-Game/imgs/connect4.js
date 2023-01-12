@@ -6,7 +6,7 @@ const body = document.querySelector("body");
 body.innerHTML = `
 <div id = "winningScreen">
   <h1 id = "winningText"></h1>
-  <button onclick="reset()">Restart</button>
+  <button onclick="reset()">New Game</button>
 </div>
 <header>
   <h1>Connect 4</h1>
@@ -24,10 +24,10 @@ const gameBoardCon = document.querySelector("#gameBoardCon")
 const winningScreen = document.querySelector("#winningScreen");
 const winningText = document.querySelector("#winningText");
 const playerTurn = document.querySelector("#playerTurn");
-const redPiece = "Red";
-const yellowPiece = "Yellow";
+const peachPiece = "Peach";
+const orangePiece = "Orange";
 let gameBoardArr = [];
-let isRed = true;
+let isPeach = true;
 let piecesPlaced = 0;
 
 // Populate Array with arrays of objects
@@ -56,7 +56,7 @@ function populateArr(){
 
 // Swap colours after each click
 function swapPlayers(){
-  isRed = !isRed;
+  isPeach = !isPeach;
   displayTurn();
 }
 
@@ -65,11 +65,11 @@ function swapPlayers(){
 function addMarker(posX){
   for(let posY = 5; posY > -1; posY--){
     if(!gameBoardArr[posY][posX].taken){
-      if(isRed){
+      if(isPeach){
         piecesPlaced++
-        gameBoardArr[posY][posX].div.style.backgroundColor = redPiece;
+        gameBoardArr[posY][posX].div.style.backgroundColor = "var(--third-color)";
         gameBoardArr[posY][posX].taken = true;
-        gameBoardArr[posY][posX].piece = redPiece;
+        gameBoardArr[posY][posX].piece = peachPiece;
         gameBoardArr[posY][posX].number = piecesPlaced;
         checkWin(gameBoardArr, gameBoardArr[posY][posX], piecesPlaced);
         //swap player once a game piece has been legally placed
@@ -77,9 +77,9 @@ function addMarker(posX){
         break;
       }else{
         piecesPlaced++
-        gameBoardArr[posY][posX].div.style.backgroundColor = yellowPiece;
+        gameBoardArr[posY][posX].div.style.backgroundColor = "var(--fourth-color)";
         gameBoardArr[posY][posX].taken = true;
-        gameBoardArr[posY][posX].piece = yellowPiece;
+        gameBoardArr[posY][posX].piece = orangePiece;
         gameBoardArr[posY][posX].number = piecesPlaced;
         checkWin(gameBoardArr, gameBoardArr[posY][posX],piecesPlaced);
         //swap player once a game piece has been legally placed
@@ -188,10 +188,10 @@ function reset(){
 
 // display the current players turn
 function displayTurn(){
-  if(isRed){
-    playerTurn.innerHTML = redPiece;
+  if(isPeach){
+    playerTurn.innerHTML = peachPiece;
   }else{
-    playerTurn.innerHTML = yellowPiece;
+    playerTurn.innerHTML = orangePiece;
   };
 };
 
