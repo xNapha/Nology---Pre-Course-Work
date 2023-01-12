@@ -13,7 +13,9 @@ body.innerHTML = `
   <button onclick="reset()">Restart</button>
   <p id="playerTurn"></p>
 </header>
+<main>
 <div id = "gameBoardCon"></div>
+</main>
 <footer>© Nathan Cai</footer>
 `;
 

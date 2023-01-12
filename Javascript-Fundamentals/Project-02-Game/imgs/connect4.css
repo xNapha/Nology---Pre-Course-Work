@@ -18,6 +18,9 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+:root{
+  --main-bg-color: #FFF;
+}
 body{
   display: flex;
   flex-direction: column;
@@ -25,6 +28,7 @@ body{
   height: 100vh;
   justify-content: center;
   gap: 20px;
+  background-color: var(--main-bg-color);
 }
 #winningScreen{
   display:none;
@@ -36,6 +40,10 @@ body{
   flex-direction:column;
   background-color: rgba(0,0,0,0.4);
   color: white;
+  z-index: 1;
+}
+#winningScreen > h1{
+  font-size: 3rem;
 
 }
 header{
@@ -55,15 +63,28 @@ header > button{
 header > p{
   font-size: 2rem;
 }
+main{
+  display:block;
+  margin: auto;
+}
 #gameBoardCon{
   display: grid;
-  grid-template-columns: repeat(7,50px);
+  grid-template-columns: repeat(7,3rem);
+  gap: .5rem;
   justify-content: center;
   align-items: center;
+  width: 25rem;
+  background-color: blue;
+  padding: .3rem;
+  border-radius: 2rem;
+}
+#gameBoardCon > * {
+  border-radius: 2rem;
+  background-color: var(--main-bg-color);
 }
 .empty{
-  width: 50px;
-  height: 50px;
+  width: 3rem;
+  height: 3rem;
   border: 1px solid black;
 }
 .empty:hover{
@@ -73,6 +94,5 @@ footer{
   position: fixed;
   width: 100vw;
   text-align: center;
-  border: 1px solid black;
   bottom:0;
 }
