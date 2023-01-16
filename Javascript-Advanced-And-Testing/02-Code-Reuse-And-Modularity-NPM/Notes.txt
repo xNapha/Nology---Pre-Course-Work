@@ -40,7 +40,11 @@ Packa.json and NPM Deep Dive
     Generate node_modules after cloning repo
       - npm install
   Versioning
-    example ^/~(Latest Minor Version/ Lastest Patch Version) 8.3.2 (Major.Minor.BugFix)
+    ^/~(Latest Minor Version/ Lastest Patch Version) 8.3.2 (Major.Minor.BugFix)
   Global Modules
-    To
-  Scripts
+    To Install a package globally
+      npm install -g package-name
+    To uninstall a package from global
+      npm uninstall -g package-name
+    To find the folder where global installs are
+      npm root -g
