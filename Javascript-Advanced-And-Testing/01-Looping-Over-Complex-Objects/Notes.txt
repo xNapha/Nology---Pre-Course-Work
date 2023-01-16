@@ -27,6 +27,6 @@ Deep/Shallow Copying JSON
       - a new object is created
         - if any of the fields of the object are referenced to other objects, just the reference addresses are copied
     Deep Copy
-      - copies all fieds, and makes copies of dynamically allocated memory pointed to by the fields
+      - copies all fields, and makes copies of dynamically allocated memory pointed to by the fields
       - a deep copy occurs when an object is copied along with the objects to which it refers
   

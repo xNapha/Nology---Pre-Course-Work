@@ -1,0 +1,46 @@
+Package Managers and NPM
+  Reusable code
+  NPM can be seen as a Global repo
+  Developers can upload code, and pull down code in form of packages/modules and use it in projects
+    - Don't need to reinvent the wheel
+
+  NPM
+    Node Package Manager
+      automate the process of installing, upgrading, configuring, and removing computer programs for a computer's OS in a consistent manner
+    Allows us to install modules/package on your system
+
+NPM Basic Commands
+  Commands
+    npm help
+      - brings up help page with useful commands
+    npm init
+      - initialize the package manager file
+  Package.json File
+    Contains information about the app you are building, including
+      - list dependencies
+      - npm scripts available on the package
+    "npm set init-author-name 'Nathan Cai'"
+      - can be used to alter the configuration of the default package.json file
+      - "npm config delete init-author-name" to remove
+  Dependencies
+    - Our application needs this module/package in both development stage, as well as production
+  Adding dependencies
+    - npm install <package-name>
+Packa.json and NPM Deep Dive
+  Package.json & node_modules relationship
+    add node_modules to gitignore file
+    first command after pulling a file from github would bt npm install
+  Commands Summary
+    Adding a package
+      - npm install package-name
+      - Add -dev on the end for a dev dependency
+    Removing a package
+      - npm uninstall package-name
+      - Add -dev on the end for a dev dependency
+    Generate node_modules after cloning repo
+      - npm install
+  Versioning
+    example ^/~(Latest Minor Version/ Lastest Patch Version) 8.3.2 (Major.Minor.BugFix)
+  Global Modules
+    To
+  Scripts

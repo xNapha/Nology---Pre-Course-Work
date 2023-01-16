@@ -1,0 +1,14 @@
+{
+  "name": "02-code-reuse-and-modularity-npm",
+  "version": "1.0.0",
+  "description": "code reuse and modularity",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nathan Cai",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.29.4"
+  }
+}
