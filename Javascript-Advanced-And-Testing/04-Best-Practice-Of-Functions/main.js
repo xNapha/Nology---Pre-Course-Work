@@ -2,15 +2,17 @@
 document.querySelector(".translate-btn").addEventListener("click", ()=>{
   // Get the input value
   const englishWord = document.querySelector(".input-box").value;
+
+  // // if word matches, put translation into Dom
+  // if(englishWord === "hello"){
+  //   document.querySelector(".translate-result").innerHTML = "bonjour"
+  // } else if (englishWord === "goodbye"){
+  //   document.querySelector(".translate-result").innerHTML = "au revoir"
+  // } else {
+  //   document.querySelector(".translate-result").innerHTML = "unavailable"
+  // };
   
-  // if word mathces, put translation into Dom
-  if(englishWord === "hello"){
-    document.querySelector(".translate-result").innerHTML = "bonjour"
-  } else if (englishWord === "goodbye"){
-    document.querySelector(".translate-result").innerHTML = "au revoir"
-  } else {
-    document.querySelector(".translate-result").innerHTML = "unavailable"
-  };
+  document.querySelector(".translate-result").innerHTML = translateEnglishToFrench(englishWord);
 });
 
 // Make the code more testable
@@ -26,5 +28,5 @@ const translateEnglishToFrench = (englishWord) =>{
     return "au revoir"
   } else { 
     return "unavailable"
-  }
-}
+  };
+};
