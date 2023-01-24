@@ -1,0 +1,22 @@
+.alienFleet{
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.motherShipCon{
+  text-align: center;
+}
+.defenceShipCon{
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+}
+.attackShipCon{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-evenly;
+  text-align: center;
+}
